@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <button style="width: 200px;height: 60px" id="btn">请求</button>
+</body>
+
+</html>
+<script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>
+<script>
+  document.querySelector('#btn').addEventListener('click', () => {
+    const data = {
+      id: 1,
+      name: `@${Date.now()}`,
+      photos: [{ url: '1' }]
+    }
+    axios.post('/posts', data).then(result => {
+      console.warn(result)
+    })
+  })
+
+</script>
