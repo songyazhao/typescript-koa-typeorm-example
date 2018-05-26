@@ -17,9 +17,12 @@
 <script>
   document.querySelector('#btn').addEventListener('click', () => {
     const data = {
-      id: 1,
-      name: `@${Date.now()}`,
-      photos: [{ url: '1' }]
+      name: `@xiaoming${Date.now()}`,
+      photos: [
+        { url: 'songyazhao1.github.io' },
+        { url: 'songyazhao2.github.io' },
+        { url: 'songyazhao3.github.io' }
+      ]
     }
     axios.post('/posts', data).then(result => {
       console.warn(result)

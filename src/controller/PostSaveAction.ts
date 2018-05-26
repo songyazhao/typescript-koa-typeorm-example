@@ -14,31 +14,48 @@ export async function home(context) {
 export async function postSaveAction(context: Context) {
     const photoRepository = getManager().getRepository(Photo);
     const userRepository = getManager().getRepository(User);
+    let { photos } = context.request.body;
+
+    photos = await photoRepository.save(photos)
+
+    const newPost = { ...context.request.body, photos };
+    await userRepository.save(newPost);
+
+    context.body = newPost;
+}
+
+export async function postSaveAction2(context: Context) {
+    const photoRepository = getManager().getRepository(Photo);
+    const userRepository = getManager().getRepository(User);
     const photo1 = new Photo();
     photo1.url = "me.jpg";
     await photoRepository.save(photo1);
 
     const photo2 = new Photo();
     photo2.url = "me-and-bears.jpg";
-    await userRepository.save(photo2);
+    await photoRepository.save(photo2);
 
     const user = new User();
     user.name = "John";
     user.photos = [photo1, photo2];
 
-    console.log('@#', user)
     await userRepository.save(user);
 }
-// export async function postSaveAction(context: Context) {
-//     const postRepository = getManager().getRepository(User);
 
-//     console.log('@#', context.request.body);
+export async function postSaveAction3(context: Context) {
+    const photoRepository = getManager().getRepository(Photo);
+    const userRepository = getManager().getRepository(User);
+    const user = new User();
+    user.name = "Leo";
+    await userRepository.save(user);
 
-//     const newPost = postRepository.create(context.request.body);
+    const photo1 = new Photo();
+    photo1.url = "me.jpg";
+    photo1.user = user;
+    await photoRepository.save(photo1);
 
-//     console.log('@#', newPost);
-
-//     await postRepository.save(newPost);
-
-//     context.body = newPost;
-// }
+    const photo2 = new Photo();
+    photo2.url = "me-and-bears.jpg";
+    photo2.user = user;
+    await photoRepository.save(photo2);
+}
